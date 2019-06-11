@@ -5,6 +5,7 @@ $db = require __DIR__ . '/db.php';
 
 $config = [
     'id' => 'basic',
+    'name' => 'Tester App Manager',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'aliases' => [
@@ -12,15 +13,23 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'components' => [
+        'authManager' => [
+            'class' => 'dektrium\rbac\components\DbManager',
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => '2RXDklS4ItB8_FFxKa32cYFL7kLgpts8',
+
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ]
         ],
-        'cache' => [
-            'class' => 'yii\caching\FileCache',
-        ],
+        // 'cache' => [
+        //     'class' => 'yii\caching\FileCache',
+        // ],
         'user' => [
-            'identityClass' => 'app\models\User',
+            'class' => 'yii\web\User',
+            'identityClass' => 'dektrium\user\models\User',
             'enableAutoLogin' => true,
         ],
         'errorHandler' => [
@@ -51,6 +60,35 @@ $config = [
             ],
         ],
         */
+        'urlManager' => [
+            'class' => 'yii\web\UrlManager',
+            'showScriptName' => false,
+            // 'enableStrictParsing' => true,
+            'enablePrettyUrl' => true,
+            'rules' => array(
+                [
+                    'class' => 'app\rest\AppUrlRule', 
+                    'controller' => [
+                        'rest/v1/app' => 'rest-default'
+                    ],
+                    'except' => [],
+                ],
+
+                '<controller:\w+>/<id:\d+>' => '<controller>/view',
+                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
+                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
+            ),
+        ],
+    ],
+    'modules' => [
+        'user' => [
+            'class' => 'dektrium\user\Module',
+            'modelMap' => [
+                'User' => 'app\models\User',
+            ],
+            'admins' => ['adzayko', 'admin']
+        ],
+        'rbac' => 'dektrium\rbac\RbacWebModule'
     ],
     'params' => $params,
 ];

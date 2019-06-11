@@ -5,12 +5,17 @@
 
 use app\widgets\Alert;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
-AppAsset::register($this);
+if (class_exists('ramosisw\CImaterial\web\MaterialAsset')) {
+    \ramosisw\CImaterial\web\MaterialAsset::register($this);
+} else {
+    AppAsset::register($this);
+}
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -23,55 +28,67 @@ AppAsset::register($this);
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
-<body>
+<body style="background: #fff;">
 <?php $this->beginBody() ?>
 
 <div class="wrap">
-    <?php
-    NavBar::begin([
-        'brandLabel' => Yii::$app->name,
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
-        ],
-    ]);
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
-            Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
-            ) : (
-                '<li>'
-                . Html::beginForm(['/site/logout'], 'post')
-                . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')',
-                    ['class' => 'btn btn-link logout']
-                )
-                . Html::endForm()
-                . '</li>'
-            )
-        ],
-    ]);
-    NavBar::end();
-    ?>
+    
+		<!-- 
+			/user/registration/register Displays registration form
+			/user/registration/resend Displays resend form
+			/user/registration/confirm Confirms a user (requires id and token query params)
+			/user/security/login Displays login form
+			/user/security/logout Logs the user out (available only via POST method)
+			/user/recovery/request Displays recovery request form
+			/user/recovery/reset Displays password reset form (requires id and token query params)
+			/user/settings/profile Displays profile settings form
+			/user/settings/account Displays account settings form (email, username, password)
+			/user/settings/networks Displays social network accounts settings page
+			/user/profile/show Displays user's profile (requires id query param)
+			/user/admin/index Displays user management interface
+		 -->
+    <nav class="navbar navbar-expand-lg bg-info">
+			<div class="container-fluid">
+				<div class="pull-left">
+					<a class="navbar-brand" href="/">Car Tester</a>
+				</div>
+				<div class="pull-right">
+				<ul class="nav justify-content-end">
+					<li class="nav-item pull-right">
+						<?php if (!Yii::$app->user->isGuest) {
+							echo Html::a('Logout', Url::to(['/user/security/logout']), ['data-method' => 'POST', 'class' => 'nav-link active']);
+						} else {
+							echo Html::a('Login', Url::to(['/user/security/login']), ['data-method' => 'POST', 'class' => 'nav-link active']) ;
+						} ?>
+					</li>
+					<li class="nav-item pull-right">
+						<a class="nav-link" href="/user/settings/profile">Profile</a>
+					</li>
+					<li class="nav-item pull-right">
+						<a class="nav-link" href="/user/admin">Users</a>
+					</li>
+					<li class="nav-item pull-right">
+						<a class="nav-link" href="/">Dashboard</a>
+					</li>
+				</ul>
+				</div>
+			</div>
+    </nav>
+    <section class="col-md-12">
+			<div class="container" style="padding: 50px">
+				<?= Breadcrumbs::widget([
+						'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+				]) ?>
+				<?= Alert::widget() ?>
+				<?= $content ?>
+			</div>
+    </section>
 
-    <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?= Alert::widget() ?>
-        <?= $content ?>
-    </div>
 </div>
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
-
-        <p class="pull-right"><?= Yii::powered() ?></p>
+			<p class="pull-left">&copy; Car Tester <?= date('Y') ?></p>
     </div>
 </footer>
 

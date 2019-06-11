@@ -7,6 +7,7 @@
 
 namespace app\commands;
 
+use Yii;
 use yii\console\Controller;
 use yii\console\ExitCode;
 
@@ -30,5 +31,22 @@ class HelloController extends Controller
         echo $message . "\n";
 
         return ExitCode::OK;
+    }
+
+    public function actionMigrate()
+    {
+        Yii::$app->runAction('migrate', [
+			'migrationPath' => "@vendor/dektrium/yii2-user/migrations", 
+			'interactive' => false
+        ]);
+        
+        Yii::$app->runAction('migrate', [
+			'migrationPath' => "@yii/rbac/migrations", 
+			'interactive' => false
+        ]);
+        
+        Yii::$app->runAction('migrate', [
+			'interactive' => false
+		]);
     }
 }
