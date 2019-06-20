@@ -62,10 +62,16 @@ if (class_exists('ramosisw\CImaterial\web\MaterialAsset')) {
 						} ?>
 					</li>
 					<li class="nav-item pull-right">
-						<a class="nav-link" href="/user/settings/profile">Profile</a>
+						<a class="nav-link" href="/car">Car</a>
+					</li>
+					<li class="nav-item pull-right">
+						<a class="nav-link" href="/class">Class</a>
 					</li>
 					<li class="nav-item pull-right">
 						<a class="nav-link" href="/user/admin">Users</a>
+					</li>
+					<li class="nav-item pull-right">
+						<a class="nav-link" href="/user/settings/profile">My Profile</a>
 					</li>
 					<li class="nav-item pull-right">
 						<a class="nav-link" href="/">Dashboard</a>

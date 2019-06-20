@@ -24,5 +24,6 @@ class AppUrlRule extends \yii\rest\UrlRule
 	 */
 	public $extraPatterns = [		
 			'POST login' => 'login',
+			'GET required-data' => 'required-data'
     ];
 }

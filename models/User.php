@@ -14,6 +14,11 @@ class User extends BaseUser
         return '{{%user}}';
     }
 
+    public function getProfile()
+    {
+        return $this->hasOne(\dektrium\user\models\Profile::className(), ['user_id' => 'id']);
+    }
+
     public static function findIdentityByAccessToken($token, $type = null)
     {
         return Token::findOne(['code' => $token]);

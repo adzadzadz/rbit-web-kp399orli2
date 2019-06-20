@@ -6,8 +6,8 @@ class RestTemplate extends \yii\base\Component
   public static function success($data, $msg = 'success', $code = 200)
   {
     return [
-      'Author' => 'Adrian T. Saycon',
-      'Website' => 'www.adriansaycon.com,',
+      'author' => 'Adrian T. Saycon',
+      'website' => 'www.adriansaycon.com,',
       'timestamp' => '',
       'result' => $data,
       'status' => [
@@ -20,8 +20,8 @@ class RestTemplate extends \yii\base\Component
   public static function fail($msg = 'Not allowed', $code = 403)
   {
     return [
-      'Author' => 'Adrian T. Saycon',
-      'Website' => 'www.adriansaycon.com,',
+      'author' => 'Adrian T. Saycon',
+      'website' => 'www.adriansaycon.com,',
       'timestamp' => '',
       'result' => null,
       'status' => [
