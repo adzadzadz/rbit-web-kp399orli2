@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use Yii;
+use yii\filters\AccessControl;
 use app\models\ClassCarLocation;
 use app\models\SessionSearch;
 use yii\web\Controller;
@@ -20,6 +21,15 @@ class SessionController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -28,6 +38,7 @@ class SessionController extends Controller
             ],
         ];
     }
+
 
     /**
      * Lists all ClassCarLocation models.

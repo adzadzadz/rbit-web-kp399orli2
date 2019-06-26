@@ -54,12 +54,9 @@ if (class_exists('ramosisw\CImaterial\web\MaterialAsset')) {
 				</div>
 				<div class="pull-right">
 				<ul class="nav justify-content-end">
+				<?php if (!Yii::$app->user->isGuest) { ?>
 					<li class="nav-item pull-right">
-						<?php if (!Yii::$app->user->isGuest) {
-							echo Html::a('Logout', Url::to(['/user/security/logout']), ['data-method' => 'POST', 'class' => 'nav-link active']);
-						} else {
-							echo Html::a('Login', Url::to(['/user/security/login']), ['data-method' => 'POST', 'class' => 'nav-link active']) ;
-						} ?>
+							<?= Html::a('Logout', Url::to(['/user/security/logout']), ['data-method' => 'POST', 'class' => 'nav-link active']); ?>
 					</li>
 					<li class="nav-item pull-right">
 						<a class="nav-link" href="/car">Car</a>
@@ -76,6 +73,11 @@ if (class_exists('ramosisw\CImaterial\web\MaterialAsset')) {
 					<li class="nav-item pull-right">
 						<a class="nav-link" href="/session">Dashboard</a>
 					</li>
+					<?php } else { ?>
+						<li class="nav-item pull-right">
+							<?= Html::a('Login', Url::to(['/user/security/login']), ['data-method' => 'POST', 'class' => 'nav-link active']) ?>
+						</li>
+					<?php } ?>
 				</ul>
 				</div>
 			</div>
