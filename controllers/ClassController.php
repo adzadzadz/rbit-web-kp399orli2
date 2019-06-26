@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use yii\filters\AccessControl;
+use dektrium\user\filters\AccessRule;
 use app\models\TesterClass;
 use app\models\ClassSearch;
 use yii\web\Controller;
@@ -23,10 +24,13 @@ class ClassController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
+                'ruleConfig' => [
+			        'class' => AccessRule::className(),
+                ],
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => ['admin'],
                     ],
                 ],
             ],
