@@ -60,7 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php
                 
                 foreach ($data as $key => $value) { 
-                    if ($key === array_key_last($data)) {
+                    if ($key === \array_key_last($data)) {
                         echo "{lat: $value->latitude, lng: $value->longitude}";
                     } else {
                         echo "{lat: $value->latitude, lng: $value->longitude},";
