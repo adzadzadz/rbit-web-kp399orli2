@@ -97,8 +97,9 @@ class RestDefaultController extends \yii\rest\ActiveController
         $rawData = Yii::$app->request->post('data');
         
         $trailing_comma_fix = \str_replace(",]}end", "]}end", $rawData);
-        preg_match('/({.+?)(?=end)/', $trailing_comma_fix, $matches);
-        foreach ($matches as $match) {
+        preg_match_all('/({.+?)(?=end)/', $trailing_comma_fix, $matches);
+
+        foreach ($matches[0] as $match) {
             try {
                 $data_array = json_decode($match);
                 $locs = new \app\models\Locations;
