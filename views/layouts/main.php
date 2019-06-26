@@ -74,7 +74,7 @@ if (class_exists('ramosisw\CImaterial\web\MaterialAsset')) {
 						<a class="nav-link" href="/user/settings/profile">My Profile</a>
 					</li>
 					<li class="nav-item pull-right">
-						<a class="nav-link" href="/">Dashboard</a>
+						<a class="nav-link" href="/session">Dashboard</a>
 					</li>
 				</ul>
 				</div>

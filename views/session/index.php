@@ -7,7 +7,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\models\SessionSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Class Car Locations';
+$this->title = 'Sessions';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="class-car-location-index">
@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Class Car Location', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Session', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php Pjax::begin(); ?>
@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            'id',
+            // 'id',
             [
                 'attribute' => 'trainer_id',
                 'value'=> function ($model, $key, $index, $grid){
@@ -53,9 +53,23 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             //'locations_id',
             //'status',
-            //'created_at',
-            //'updated_at',
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'attribute' => 'created_at',
+                'value'=> function ($model, $key, $index, $grid){
+                    return date("Y-m-d H:i:s", $model->created_at);
+                }
+            ]
+            ,
+            [
+                'attribute' => 'updated_at',
+                'value'=> function ($model, $key, $index, $grid){
+                    return date("Y-m-d H:i:s", $model->updated_at);
+                }
+            ],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template'=>'{view}'
+            ],
         ],
     ]); ?>
 

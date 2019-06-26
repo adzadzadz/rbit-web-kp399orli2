@@ -103,7 +103,7 @@ class RestDefaultController extends \yii\rest\ActiveController
             }            
         }
         
-        return REST::success("Data sync successfully");
+        return REST::success($name);
     }
 
 }

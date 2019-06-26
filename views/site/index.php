@@ -5,12 +5,7 @@
 $this->title = 'Car Tester Manager';
 ?>
 <div class="site-index">
-
-    <div class="jumbotron">
-        <h1>App Manager</h1>
-    </div>
-
     <div class="body-content">
-
+        <h1>Dashboard</h1>
     </div>
 </div>

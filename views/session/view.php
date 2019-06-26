@@ -79,6 +79,6 @@ $this->params['breadcrumbs'][] = $this->title;
         flightPath.setMap(map);
         }
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAC1_C2SN1uyVEUhRWZ0MIJJLkvXPdxfdQ&callback=initMap" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=<?= Yii::$app->params['gmapApiKey'] ?>&callback=initMap" async defer></script>
 
 </div>
