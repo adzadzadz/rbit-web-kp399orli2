@@ -111,12 +111,11 @@ class RestDefaultController extends \yii\rest\ActiveController
                     $paste->class_id   = $data_array->class_id;
                     $paste->car_id     = $data_array->car_id;
                     $paste->locations_id = $locs->id;
-                    $paste->validate();
                     $paste->save();
                 }
             } catch(\yii\db\Exception $e) {
                 return REST::fail($e->message, $e->code);
-            }            
+            }
         }
         
         return REST::success($name);

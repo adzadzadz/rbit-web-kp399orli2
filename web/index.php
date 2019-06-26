@@ -9,4 +9,14 @@ require __DIR__ . '/../vendor/yiisoft/yii2/Yii.php';
 
 $config = require __DIR__ . '/../config/web.php';
 
+if (! function_exists("array_key_last")) {
+  function array_key_last($array) {
+      if (!is_array($array) || empty($array)) {
+          return NULL;
+      }
+      
+      return array_keys($array)[count($array)-1];
+  }
+}
+
 (new yii\web\Application($config))->run();
