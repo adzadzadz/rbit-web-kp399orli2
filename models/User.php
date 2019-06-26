@@ -47,14 +47,6 @@ class User extends BaseUser
     /**
      * {@inheritdoc}
      */
-    public function getAuthKey()
-    {
-        return $this->authKey;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function validateAuthKey($authKey)
     {
         return $this->authKey === $authKey;
