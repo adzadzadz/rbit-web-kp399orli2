@@ -65,7 +65,8 @@ class AuthToken extends \yii\db\ActiveRecord
 
     public static function findIdentityByAccessToken($token)
     {
-        return self::findOne(['token' => $token]);
+        $token = self::findOne(['token' => $token]);
+        return \app\models\User::findOne(['id' => $token->user_id]);
     }
 
 

@@ -21,7 +21,8 @@ class User extends BaseUser
 
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        return Token::findOne(['code' => $token]);
+        $token = Token::findOne(['code' => $token]);
+        return self::findOne(['user_id' => $token->user_id]);
     }
 
     /**

@@ -42,7 +42,8 @@ class RestDefaultController extends \yii\rest\ActiveController
     {
         $model = new \app\models\LoginForm;
 
-        if ($model->load(['LoginForm' => Yii::$app->request->post()]) && $user = $model->login()) {
+        if ($model->load(['LoginForm' => Yii::$app->request->post()]) && $model->validate()) {
+            $user = $model->login();
             $token = AuthToken::findOne(['user_id' => $user->id]);
             return REST::success([
                 'displayName' => User::findOne($user->id)->profile->name,
@@ -72,6 +73,37 @@ class RestDefaultController extends \yii\rest\ActiveController
             'classes' => $classes,
             'cars' => $cars
         ]);
+    }
+
+    public function actionUploadData()
+    {   
+        $name = Yii::$app->request->post('name');
+        $rawData = Yii::$app->request->post('data');
+        
+        $trailing_comma_fix = \str_replace(",]}end", "]}end", $rawData);
+        preg_match('/({.+?)(?=end)/', $trailing_comma_fix, $matches);
+        foreach ($matches as $match) {
+            try {
+                $data_array = json_decode($match);
+                $locs = new \app\models\Locations;
+                $locs->name = $name;
+                $locs->data = json_encode($data_array->data);
+                if ($locs->save()) {
+                    $paste = new \app\models\ClassCarLocation;
+                    $paste->trainer_id = Yii::$app->user->id;
+                    $paste->student_id = $data_array->student_id;
+                    $paste->class_id   = $data_array->class_id;
+                    $paste->car_id     = $data_array->car_id;
+                    $paste->locations_id = $locs->id;
+                    $paste->validate();
+                    $paste->save();
+                }
+            } catch(\yii\db\Exception $e) {
+                return REST::fail($e->message, $e->code);
+            }            
+        }
+        
+        return REST::success("Data sync successfully");
     }
 
 }
