@@ -109,7 +109,7 @@ class User extends BaseUser
                 'token' => Yii::$app->security->generateRandomString(),
             ]);
             $authToken->save();
-            
+            return true;
         } catch (\Exception $e) {
             $transaction->rollBack();
             \Yii::warning($e->getMessage());
