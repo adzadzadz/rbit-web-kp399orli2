@@ -29,7 +29,7 @@ $config = [
         // ],
         'user' => [
             'class' => 'yii\web\User',
-            'identityClass' => 'dektrium\user\models\User',
+            'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
         ],
         'errorHandler' => [
