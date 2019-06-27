@@ -61,8 +61,9 @@ class RestDefaultController extends \yii\rest\ActiveController
         if ($model->load(['LoginForm' => Yii::$app->request->post()]) && $model->validate()) {
             $user = $model->login();
             $token = AuthToken::findOne(['user_id' => $user->id]);
+            $me = User::findOne($user->id);
             return REST::success([
-                'displayName' => User::findOne($user->id)->profile->name,
+                'displayName' => isset($me->profile->name) ? $me->profile->name : $me->username,
                 'userId' => $user->id,
                 'token' => $token->token
             ]);
