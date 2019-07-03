@@ -99,7 +99,6 @@ class RestDefaultController extends \yii\rest\ActiveController
         
         $trailing_comma_fix = \str_replace(",]}end", "]}end", $rawData);
         preg_match_all('/({.+?)(?=end)/', $trailing_comma_fix, $matches);
-
         foreach ($matches[0] as $match) {
             try {
                 $data_array = json_decode($match);
@@ -121,6 +120,13 @@ class RestDefaultController extends \yii\rest\ActiveController
         }
         
         return REST::success($name);
+    }
+
+    private function remove_utf8_bom($text)
+    {
+        $bom = pack('H*','EFBBBF');
+        $text = preg_replace("/^$bom/", '', $text);
+        return $text;
     }
 
 }
