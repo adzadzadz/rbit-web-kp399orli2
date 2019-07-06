@@ -70,7 +70,7 @@ function haversineGreatCircleDistance($latitudeFrom, $longitudeFrom, $latitudeTo
 			$count = 0;
 			$speed = 0;
 			$totalDistance = 0;
-			foreach (json_decode($model->locs->data) as $loc) { 
+			foreach (json_decode($model->locs->data)->locations as $loc) { 
 				if ($lastLoc !== null) {
 					// Calc distance
 					$distance = haversineGreatCircleDistance($lastLoc->latitude, $lastLoc->longitude, $loc->latitude, $lastLoc->longitude);
@@ -99,20 +99,21 @@ function haversineGreatCircleDistance($latitudeFrom, $longitudeFrom, $latitudeTo
 
     <section id="timeline">
       <h3>Notes</h3>
-			<?php 
-				foreach (json_decode($model->locs->data) as $loc) {
-						if ($loc->note !== "null") {
-							echo '<blockquote class="blockquote">';
-								echo date('Y-M-D H:i:s', (int)$loc->epoch / 1000) . " - $loc->note";
-							echo '</blockquote>';
-						}
+      <?php 
+				foreach (json_decode($model->locs->data)->notes as $note) {
+
+            if (isset($note->note) && $note->note !== "null") {
+              echo '<blockquote class="blockquote">';
+                echo date('Y-M-D H:i:s', (int)$note->epoch / 1000) . " - $note->note";
+              echo '</blockquote>';
+       
+          }
 				}
-				$avgSpeed = $speed / $count;
 			?>
     </section>
 		
     <script>
-        <?php $data = json_decode($model->locs->data); ?>
+        <?php $data = json_decode($model->locs->data)->locations; ?>
         var map;
         function initMap() {
             var map = new google.maps.Map(document.getElementById('map'), {

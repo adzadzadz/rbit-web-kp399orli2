@@ -97,14 +97,16 @@ class RestDefaultController extends \yii\rest\ActiveController
         $name = Yii::$app->request->post('name');
         $rawData = Yii::$app->request->post('data');
         
-        $trailing_comma_fix = \str_replace(",]}end", "]}end", $rawData);
-        preg_match_all('/({.+?)(?=end)/', $trailing_comma_fix, $matches);
+        $trailing_comma_fix_data_area = \str_replace("},],", "}], \"notes\" : ", $rawData);
+        $trailing_comma_fix_notes_area = \str_replace(",]}end", "]}end", $trailing_comma_fix_data_area);
+        preg_match_all('/({.+?)(?=end)/', $trailing_comma_fix_notes_area, $matches);
+
         foreach ($matches[0] as $match) {
             try {
                 $data_array = json_decode($match);
                 $locs = new \app\models\Locations;
                 $locs->name = $name;
-                $locs->data = json_encode($data_array->data);
+                $locs->data = json_encode(["locations" => $data_array->data, "notes" => $data_array->notes]);
                 if ($locs->save()) {
                     $paste = new \app\models\ClassCarLocation;
                     $paste->trainer_id = Yii::$app->user->id;
