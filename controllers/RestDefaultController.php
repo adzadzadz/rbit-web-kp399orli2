@@ -106,7 +106,7 @@ class RestDefaultController extends \yii\rest\ActiveController
                 $data_array = json_decode($match);
                 $locs = new \app\models\Locations;
                 $locs->name = $name;
-                $locs->data = json_encode(["locations" => $data_array->data, "notes" => $data_array->notes]);
+                $locs->data = json_encode(['raw' => $rawData]); // json_encode(["locations" => $data_array->data, "notes" => $data_array->notes]);
                 if ($locs->save()) {
                     $paste = new \app\models\ClassCarLocation;
                     $paste->trainer_id = Yii::$app->user->id;
