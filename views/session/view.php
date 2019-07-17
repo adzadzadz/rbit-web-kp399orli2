@@ -100,15 +100,17 @@ function haversineGreatCircleDistance($latitudeFrom, $longitudeFrom, $latitudeTo
     <section id="timeline">
       <h3>Notes</h3>
       <?php 
-				foreach (json_decode($model->locs->data)->notes as $note) {
+        if (property_exists(json_decode($model->locs->data), 'notes')) {
+          foreach (json_decode($model->locs->data)->notes as $note) {
 
             if (isset($note->note) && $note->note !== "null") {
               echo '<blockquote class="blockquote">';
                 echo date('Y-M-D H:i:s', (int)$note->epoch / 1000) . " - $note->note";
               echo '</blockquote>';
-       
+      
+            }
           }
-				}
+        }
 			?>
     </section>
 		
